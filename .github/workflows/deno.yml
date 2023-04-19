@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 18.4.0
       - name: Setup package.json
-        run: echo '{"name":"@ibodev1/drux","version":"0.0.0","publishConfig":{"access":"public"},"scripts":{"semantic-release":"semantic-release"},"repository":{"type":"git","url":"https://github.com/ibodev1/drux.git"},"author":"İbrahim Ö<developer.ibrahimodev@gmail.com>","license":"MIT","bugs":{"url":"https://github.com/ibodev1/drux/issues"},"homepage":"https://ibodev1.github.io/drux/","devDependencies":{"semantic-release":"^21.0.1","semantic-release-gitmoji":"^1.6.4"}}' > package.json
+        run: echo '{"name":"@ibodev1/drux","version":"0.0.0","publishConfig":{"access":"public"},"scripts":{"semantic-release":"semantic-release"},"repository":{"type":"git","url":"https://github.com/ibodev1/drux.git"},"author":"İbrahim Ö<developer.ibrahimodev@gmail.com>","license":"MIT","bugs":{"url":"https://github.com/ibodev1/drux/issues"},"homepage":"https://ibodev1.github.io/drux/","devDependencies":{"semantic-release":"^21.0.1", "@semantic-release/github":"^8.0.7",semantic-release-gitmoji":"^1.6.4"}}' > package.json
       - name: Install dependencies
         run: npm install
       - name: Release
