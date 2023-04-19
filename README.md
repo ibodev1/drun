@@ -5,7 +5,7 @@
 [Example project.yml file.](./project.yml)
 
 [![Deno CI](https://github.com/ibodev1/drun/workflows/Deno%20CI/badge.svg)](https://github.com/ibodev1/drun/actions)
-[![GitHub](https://img.shields.io/github/license/ibodev1/drun)](https://github.com/ibodev1/drun/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/github/license/ibodev1/drun)](https://github.com/ibodev1/drun/blob/master/LICENSE)
 [![Contributors](https://img.shields.io/github/contributors/ibodev1/drun)](https://github.com/ibodev1/drun/graphs/contributors)
 [![Drun](https://img.shields.io/badge/ibodev1-drun-brightgreen)](https://ibodev1.github.io/drun/)
 [![Made by ibodev1](https://img.shields.io/badge/made%20by-ibodev1-0082fb)](https://github.com/ibodev1)
@@ -19,7 +19,7 @@
 You can also install it globally using the following:
 
 ```bash
-deno install --allow-read --allow-run -n drun https://raw.githubusercontent.com/ibodev1/drun/main/cli.ts
+deno install --allow-read --allow-run -n drun https://raw.githubusercontent.com/ibodev1/drun/master/cli.ts
 ```
 
 Then, the package is available to run:
@@ -31,7 +31,7 @@ drun <task name>
 Alternatively, you can use it directly from the CLI by using `deno run`:
 
 ```bash
-deno run --allow-read --allow-run https://raw.githubusercontent.com/ibodev1/drun/main/cli.ts <task name>
+deno run --allow-read --allow-run https://raw.githubusercontent.com/ibodev1/drun/master/cli.ts <task name>
 ```
 
 ### CLI with [DPX](https://github.com/denorg/dpx)
