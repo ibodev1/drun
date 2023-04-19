@@ -2,6 +2,9 @@
   "imports": {
     "/": "./",
     "./": "./",
-    "yaml": "https://esm.sh/yaml@2.2.1"
+    "yaml": "https://esm.sh/yaml@2.2.1",
+    "dos": "https://deno.land/x/dos@v0.11.0/mod.ts",
+    "path": "https://deno.land/std@0.184.0/path/mod.ts",
+    "fmt/": "https://deno.land/std@0.184.0/fmt/"
   }
 }
