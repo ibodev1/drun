@@ -1,6 +1,8 @@
 # 🏁 DRun
 
-This is a starter template for building Deno packages in TypeScript, with GitHub Actions-powered CI, tests, CLI, and Semantic Release on GitHub and npm.
+`drun start` instead of `deno task start`. create a yaml file called `project.yml` in the root directory of your project. put your tasks in `tasks:`.
+
+[Example project.yml file.](./project.yml)
 
 [![Deno CI](https://github.com/ibodev1/drun/workflows/Deno%20CI/badge.svg)](https://github.com/ibodev1/drun/actions)
 [![GitHub](https://img.shields.io/github/license/ibodev1/drun)](https://github.com/ibodev1/drun/blob/main/LICENSE)
