@@ -1,7 +1,7 @@
 import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import * as path from "https://deno.land/std@0.184.0/path/mod.ts";
 import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
-import { parse } from "npm:yaml@2.2.1";
+import { parse } from "yaml";
 
 export async function projectFile(projectFilePath: string) {
   try {
