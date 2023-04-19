@@ -19,4 +19,4 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "drun"
-          entrypoint: "./main.ts" # TODO: update entrypoint
+          entrypoint: "./mod.ts" # TODO: update entrypoint
