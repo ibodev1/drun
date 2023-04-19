@@ -16,7 +16,7 @@ export async function projectFile(projectFilePath: string) {
   }
 }
 
-export async function drun(taskName: string) {
+export async function drux(taskName: string) {
   const projectFilePath = path.join(Deno.cwd(), "./project.yml");
   const projectFileContent = await projectFile(projectFilePath);
   const tasks = projectFileContent?.tasks ?? null;
