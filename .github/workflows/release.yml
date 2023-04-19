@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 env:
   GH_TOKEN : ${{ secrets.GH_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
