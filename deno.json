@@ -1,5 +1,3 @@
 {
-  "imports": {
-    "yaml": "https://esm.sh/yaml@2.2.1"
-  }
+  "importMap": "./import_map.json"
 }
