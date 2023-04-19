@@ -1,8 +1,9 @@
-import { mode } from "./mod.ts";
+import { drun } from './mod.ts';
+import { permissionCheck } from './src/utils.ts';
 
-// https://deno.land/manual/tools/script_installer
-if (import.meta.main) {
-  for (let arg of Deno.args) {
-    console.log(arg, mode());
-  }
+const permissions = await permissionCheck();
+
+if (import.meta.main && permissions) {
+  const taskName = Deno.args[0];
+  drun(taskName);
 }
