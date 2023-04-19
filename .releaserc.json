@@ -1,4 +1,5 @@
 {
+  "repositoryUrl": "https://github.com/ibodev1/drux.git",
   "branches": ["master"],
   "plugins": [
     [
