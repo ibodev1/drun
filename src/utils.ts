@@ -1,6 +1,6 @@
-import os from "dos";
-import * as color from "fmt/colors.ts";
-import { parse } from "yaml";
+import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
+import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
+import { parse } from "https://esm.sh/yaml@2.2.1";
 
 export const getTaskName = (): string => {
   return Deno.args[0] ?? "dev";
