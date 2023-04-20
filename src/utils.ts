@@ -66,5 +66,7 @@ export const runCmd = async (cmd: string[], cwd: string): Promise<number> => {
     await Deno.stdout.write(errorLogUnit8);
   }
 
+  runCmd.close();
+
   Deno.exit(code);
 };
