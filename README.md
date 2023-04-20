@@ -19,7 +19,7 @@
 You can also install it globally using the following:
 
 ```bash
-deno install --allow-read --allow-run -n drux https://raw.githubusercontent.com/ibodev1/drux/master/cli.ts
+deno install --allow-read --allow-run --unstable --import-map https://raw.githubusercontent.com/ibodev1/drux/master/import_map.json -n drux https://raw.githubusercontent.com/ibodev1/drux/master/cli.ts
 ```
 
 Then, the package is available to run:
@@ -31,7 +31,7 @@ drux <task name>
 Alternatively, you can use it directly from the CLI by using `deno run`:
 
 ```bash
-deno run --allow-read --allow-run https://raw.githubusercontent.com/ibodev1/drux/master/cli.ts <task name>
+deno run --allow-read --allow-run --unstable --import-map https://raw.githubusercontent.com/ibodev1/drux/master/import_map.json -n drux https://raw.githubusercontent.com/ibodev1/drux/master/cli.ts <task name>
 ```
 
 ### CLI with [DPX](https://github.com/denorg/dpx)
