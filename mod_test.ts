@@ -1,5 +1,7 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import { assert } from "https://deno.land/std@0.184.0/testing/asserts.ts";
 
-Deno.test("drux cli test", (): void => {
-  assertEquals(true, !0);
+Deno.test("drux is file", async (): Promise<void> => {
+  const projectFilePath = await Deno.realPath("project.yml");
+  const fileInfo = await Deno.stat(projectFilePath);
+   assert(fileInfo.isFile);
 });
