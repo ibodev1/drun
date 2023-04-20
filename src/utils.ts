@@ -23,10 +23,13 @@ export async function projectFile(projectFilePath: string) {
       return null;
     }
   } catch (error) {
-    if (error.toString().startsWith("NotFound")) {
+    if (error instanceof Deno.errors.NotFound) {
       throw new Error("project.yml does not exist in root directory.");
+    } else if (error instanceof Deno.errors.PermissionDenied) {
+      throw new Error("Need `--allow-read` and `--allow-run` permissions.");
+    } else {
+      throw error;
     }
-    throw error;
   }
 }
 
