@@ -1,9 +1,9 @@
-import { drux } from './mod.ts';
-import { permissionCheck } from './src/utils.ts';
+import { drux } from "./mod.ts";
+import { getTaskName, permissionCheck } from "./src/utils.ts";
 
 const permissions = await permissionCheck();
 
 if (import.meta.main && permissions) {
-  const taskName = Deno.args[0];
+  const taskName = getTaskName();
   drux(taskName);
 }
