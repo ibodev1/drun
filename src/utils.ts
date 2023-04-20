@@ -14,9 +14,14 @@ export const permissionCheck = async () => {
 
 export async function projectFile(projectFilePath: string) {
   try {
-    const projectFile = await Deno.readTextFile(projectFilePath);
-    const parsedProjectFile = parse(projectFile);
-    return parsedProjectFile;
+    const fileInfo = await Deno.stat(projectFilePath);
+    if (fileInfo.isFile) {
+      const projectFile = await Deno.readTextFile(projectFilePath);
+      const parsedProjectFile = parse(projectFile);
+      return parsedProjectFile;
+    } else {
+      return null;
+    }
   } catch (error) {
     if (error.toString().startsWith("NotFound")) {
       throw new Error("project.yml does not exist in root directory.");
