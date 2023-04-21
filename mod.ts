@@ -1,4 +1,5 @@
 import { denoFile, runCmd } from "./src/utils.ts";
+import { errorMessage } from "./src/logs.ts";
 
 export async function drux(taskName: string) {
   try {
@@ -13,9 +14,9 @@ export async function drux(taskName: string) {
     }
   } catch (error) {
     if (error instanceof Deno.errors.PermissionDenied) {
-      throw new Error("Need `--allow-read` and `--allow-run` permissions.");
+      console.error(errorMessage("Need `--allow-read` and `--allow-run` permissions."));
     } else if (error instanceof Deno.errors.NotFound) {
-      throw new Error("deno.json does not exist in root directory.");
+      console.error(errorMessage("deno.json does not exist in root directory."));
     } else {
       throw error;
     }
