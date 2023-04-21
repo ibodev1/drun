@@ -1,10 +1,10 @@
-import { projectFile, runCmd } from "./src/utils.ts";
+import { denoFile, runCmd } from "./src/utils.ts";
 
 export async function drux(taskName: string) {
   try {
-    const projectFilePath = await Deno.realPath("project.yml");
-    const projectFileContent = await projectFile(projectFilePath);
-    const tasks = projectFileContent?.tasks ?? null;
+    const denoFilePath = await Deno.realPath("deno.json");
+    const denoFileContent = await denoFile(denoFilePath);
+    const tasks = denoFileContent?.tasks ?? null;
     if (!!taskName && !!tasks) {
       const task = tasks[taskName];
       if (task && task.trim() !== "") {
@@ -15,7 +15,7 @@ export async function drux(taskName: string) {
     if (error instanceof Deno.errors.PermissionDenied) {
       throw new Error("Need `--allow-read` and `--allow-run` permissions.");
     } else if (error instanceof Deno.errors.NotFound) {
-      throw new Error("project.yml does not exist in root directory.");
+      throw new Error("deno.json does not exist in root directory.");
     } else {
       throw error;
     }

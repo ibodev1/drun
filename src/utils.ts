@@ -1,6 +1,5 @@
 import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
-import { parse } from "https://esm.sh/yaml@2.2.1";
 
 export const getTaskName = (): string => {
   return Deno.args[0] ?? "dev";
@@ -12,19 +11,18 @@ export const permissionCheck = async () => {
   return read.state === "granted" && run.state === "granted";
 };
 
-export async function projectFile(projectFilePath: string) {
+export async function denoFile(denoFilePath: string) {
   try {
-    const fileInfo = await Deno.stat(projectFilePath);
+    const fileInfo = await Deno.stat(denoFilePath);
     if (fileInfo.isFile) {
-      const projectFile = await Deno.readTextFile(projectFilePath);
-      const parsedProjectFile = parse(projectFile);
-      return parsedProjectFile;
+      const denoFile = await Deno.readTextFile(denoFilePath);
+      return JSON.parse(denoFile);
     } else {
       return null;
     }
   } catch (error) {
     if (error instanceof Deno.errors.NotFound) {
-      throw new Error("project.yml does not exist in root directory.");
+      throw new Error("deno.json does not exist in root directory.");
     } else if (error instanceof Deno.errors.PermissionDenied) {
       throw new Error("Need `--allow-read` and `--allow-run` permissions.");
     } else {
