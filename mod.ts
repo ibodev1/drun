@@ -14,6 +14,8 @@ export async function drux(taskName: string) {
   } catch (error) {
     if (error instanceof Deno.errors.PermissionDenied) {
       throw new Error("Need `--allow-read` and `--allow-run` permissions.");
+    } else if (error instanceof Deno.errors.NotFound) {
+      throw new Error("project.yml does not exist in root directory.");
     } else {
       throw error;
     }
