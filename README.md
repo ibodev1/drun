@@ -15,18 +15,28 @@
 ### CLI
 
 You can also install it globally using the following:
+
 ```bash
 deno install --allow-read --allow-run -n drux https://deno.land/x/drux/cli.ts
 ```
 
 Then, the package is available to run:
+
 ```bash
 drux <task name>
 ```
 
 Alternatively, you can use it directly from the CLI by using `deno run`:
+
 ```bash
 deno run --allow-read --allow-run -n drux https://deno.land/x/drux/cli.ts <task name>
+```
+
+#### Configration
+
+If the name of the deno config file or the file containing the tasks are different, you must specify it with the `--config` or `-c` flag. `(only json)`
+```bash
+drux <task name> --config my_file.json
 ```
 
 ### Reload Cache
@@ -36,6 +46,7 @@ If you can't get updates, you may need to refresh the caches in DENO_DIR. [See t
 ### CLI with [DPX](https://github.com/denorg/dpx)
 
 After [installing DPX](https://github.com/denorg/dpx), you can directly use the CLI using the `dpx` command:
+
 ```bash
 dpx --allow-read --allow-run drux <task name>
 ```
@@ -50,6 +61,7 @@ Required permissions:
 ## 👩‍💻 Development
 
 Run tests:
+
 ```bash
 deno test --allow-read --allow-run
 ```

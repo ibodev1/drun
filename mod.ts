@@ -2,9 +2,9 @@ import { denoFile, runCmd } from "./src/utils.ts";
 import { errorMessage } from "./src/logs.ts";
 import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
 
-export async function drux(taskName: string) {
+export async function drux(taskName: string | null, configFile: string | null = "deno.json") {
   try {
-    const denoFilePath = await Deno.realPath("deno.json");
+    const denoFilePath = await Deno.realPath(configFile ?? "deno.json");
     const denoFileContent = await denoFile(denoFilePath);
     const tasks = denoFileContent?.tasks ?? null;
     if (!!taskName && !!tasks) {
@@ -31,7 +31,7 @@ export async function drux(taskName: string) {
       );
     } else if (error instanceof Deno.errors.NotFound) {
       console.error(
-        errorMessage("deno.json does not exist in root directory."),
+        errorMessage(`${configFile ?? "deno.json"} does not exist in root directory.\nPath : ${Deno.cwd()}`),
       );
     } else {
       throw error;
