@@ -57,7 +57,7 @@ export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
     const realCommand = isWindows
       ? cmd.splice(2, cmd.length - 2).join(" ")
       : cmd.join(" ");
-    const startLog = logger(realCommand) + "\n";
+    const startLog = logger(realCommand, taskName) + "\n";
     const startLogUnit8 = new TextEncoder().encode(startLog);
     await Deno.stdout.write(startLogUnit8);
 
