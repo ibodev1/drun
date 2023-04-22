@@ -2,7 +2,7 @@ import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import { errorMessage, logger } from "./logs.ts";
 
 export const getTaskName = (): string => {
-  return Deno.args[0] ?? "dev";
+  return Deno.args[0] ?? null;
 };
 
 export const permissionCheck = async () => {
