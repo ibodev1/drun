@@ -1,36 +1,6 @@
 import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
-import { errorMessage, logger } from "./logs.ts";
-import { getTaskName } from './utils_cli.ts';
-
-export const permissionCheck = async () => {
-  const read = await Deno.permissions.request({ name: "read" });
-  const run = await Deno.permissions.request({ name: "run" });
-  return read.state === "granted" && run.state === "granted";
-};
-
-export async function denoFile(denoFilePath: string) {
-  try {
-    const fileInfo = await Deno.stat(denoFilePath);
-    if (fileInfo.isFile) {
-      const denoFile = await Deno.readTextFile(denoFilePath);
-      return JSON.parse(denoFile);
-    } else {
-      return null;
-    }
-  } catch (error) {
-    if (error instanceof Deno.errors.NotFound) {
-      console.error(
-        errorMessage("deno.json does not exist in root directory."),
-      );
-    } else if (error instanceof Deno.errors.PermissionDenied) {
-      console.error(
-        errorMessage("Need `--allow-read` and `--allow-run` permissions."),
-      );
-    } else {
-      throw error;
-    }
-  }
-}
+import { errorMessage, logger } from "./utils/logs.ts";
+import { getTaskName } from './utils/cli.ts';
 
 export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
   try {

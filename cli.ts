@@ -1,6 +1,6 @@
 import { drux } from "./mod.ts";
-import { permissionCheck } from "./src/utils.ts";
-import { getTaskName, getConfigFile } from "./src/utils_cli.ts";
+import { permissionCheck } from "./src/utils/permission.ts";
+import { getConfigFile, getTaskName } from "./src/utils/cli.ts";
 
 const permissions = await permissionCheck();
 

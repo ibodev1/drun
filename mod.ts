@@ -1,5 +1,6 @@
-import { denoFile, runCmd } from "./src/utils.ts";
-import { errorMessage } from "./src/logs.ts";
+import { runCmd } from "./src/cmd.ts";
+import { denoFile } from "./src/utils/file.ts";
+import { errorMessage } from "./src/utils/logs.ts";
 import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
 
 export async function drux(taskName: string | null, configFile: string | null = "deno.json") {
