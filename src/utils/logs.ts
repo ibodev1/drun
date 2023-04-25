@@ -16,9 +16,9 @@ export const logger = (message: string, taskName?: string | null) => {
   }
 };
 
-export const availableTasks = (tasks: string[]) => {
+export const availableTasks = (tasks: { [key: string]: string } | null, fileName: string | null) => {
   if (tasks && Array.isArray(Object.entries(tasks))) {
-    console.info(color.green("DRux Available tasks:"));
+    console.info(color.green("DRux Available tasks: ") + color.italic(color.gray(fileName ?? "")));
     const entries = Object.entries(tasks) ?? [];
     for (let i = 0; i < entries.length; i++) {
       const key = entries[i][0];

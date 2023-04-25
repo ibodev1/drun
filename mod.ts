@@ -8,16 +8,17 @@ export async function drux(
   configFile: string | null = "deno.json",
 ) {
   try {
-    const tasks = await getTasks(configFile) ?? null;
+    const { tasks, fileName } = await getTasks(configFile);
+    console.log(fileName);
     if (!!taskName && !!tasks) {
       const task = tasks[taskName];
       if (task && task.trim() !== "") {
         await runCmd(task.split(" "), Deno.cwd());
       } else {
-        availableTasks(tasks);
+        availableTasks(tasks, fileName);
       }
     } else {
-      availableTasks(tasks);
+      availableTasks(tasks, fileName);
     }
   } catch (error) {
     if (error instanceof Deno.errors.PermissionDenied) {

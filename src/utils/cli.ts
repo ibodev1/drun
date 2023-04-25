@@ -5,5 +5,5 @@ export const getTaskName = (): string | null => {
 export const getConfigFile = (): string | null => {
   const configIndex = Deno.args.findIndex((arg) => arg === "--config" || arg === "-c");
   const configFileName = Deno.args[configIndex + 1] ?? null;
-  return configIndex >= 1 && configFileName && (configFileName.endsWith(".json") || configFileName.endsWith(".jsonc")) ? configFileName : null;
+  return configIndex >= 0 && configFileName ? configFileName : null;
 };
