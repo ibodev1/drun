@@ -15,3 +15,16 @@ export const logger = (message: string, taskName?: string | null) => {
     return color.green("DRux") + " " + message;
   }
 };
+
+export const availableTasks = (tasks: string[]) => {
+  if (tasks && Array.isArray(Object.entries(tasks))) {
+    console.info(color.green("DRux Available tasks:"));
+    const entries = Object.entries(tasks) ?? [];
+    for (let i = 0; i < entries.length; i++) {
+      const key = entries[i][0];
+      const task = entries[i][1];
+      console.info("- " + color.cyan(key.toString()));
+      console.log("   " + task?.toString());
+    }
+  }
+}
