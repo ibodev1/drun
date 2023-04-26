@@ -9,7 +9,6 @@ export async function drux(
 ) {
   try {
     const { tasks, fileName } = await getTasks(configFile);
-    console.log(fileName);
     if (!!taskName && !!tasks) {
       const task = tasks[taskName];
       if (task && task.trim() !== "") {
