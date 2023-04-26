@@ -5,7 +5,7 @@ async function getFileContent(denoFilePath: string) {
     const fileExists = await exists(denoFilePath);
     if (fileExists) {
       const denoFile = await Deno.readTextFile(denoFilePath);
-      if (isJSON(denoFile)){
+      if (isJSON(denoFile)) {
         return JSON.parse(denoFile) ?? null;
       } else {
         console.error(errorMessage(denoFilePath + " is not a json file."));
@@ -20,7 +20,7 @@ async function getFileContent(denoFilePath: string) {
         errorMessage("Need `--allow-read` and `--allow-run` permissions."),
       );
     } else {
-      throw error;
+      console.error(errorMessage(new Error(error).message));
     }
   }
 }
@@ -39,11 +39,11 @@ async function exists(filename: string | null): Promise<boolean> {
     if (error instanceof Deno.errors.NotFound) {
       return false;
     }
-    throw error;
+    throw new Error(error).message;
   }
 }
 
-
+// Json check
 function isJSON(text: string | null): boolean {
   try {
     if (text) {

@@ -2,6 +2,7 @@ import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import { errorMessage, logger } from "./utils/logs.ts";
 import { getTaskName } from './utils/cli.ts';
 
+// run rask func
 export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
   try {
     const taskName = getTaskName();

@@ -3,6 +3,9 @@ import { errorMessage } from "./src/utils/logs.ts";
 import { getTasks } from "./src/utils/tasks.ts";
 import { availableTasks } from './src/utils/logs.ts';
 
+/*
+ * Run task
+ */
 export async function drux(
   taskName: string | null,
   configFile: string | null = "deno.json",
@@ -25,7 +28,7 @@ export async function drux(
         errorMessage("Need `--allow-read` and `--allow-run` permissions."),
       );
     } else {
-      throw error;
+      console.error(errorMessage(new Error(error).message));
     }
   }
 }

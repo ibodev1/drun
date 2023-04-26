@@ -1,6 +1,7 @@
 import { exists, getFileContent } from "./file.ts";
 import { errorMessage } from "./logs.ts";
 
+// exists config file name
 const getExistsConfigFileName = async () => {
   const denoFileExists = await exists("deno.json");
   const denoCFileExists = await exists("deno.jsonc");
@@ -14,6 +15,7 @@ interface ReturnValue {
   fileName: string | null;
 }
 
+// tasks
 const getTasks = async (configFile: string | null): Promise<ReturnValue> => {
   try {
     let tasks = null;
@@ -50,7 +52,7 @@ const getTasks = async (configFile: string | null): Promise<ReturnValue> => {
         errorMessage("Need `--allow-read` and `--allow-run` permissions."),
       );
     } else {
-      throw error;
+      throw console.error(errorMessage(new Error(error).message));
     }
     return { tasks: null, fileName: null };
   }
