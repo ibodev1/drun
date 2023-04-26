@@ -1,6 +1,20 @@
 import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
 import { errorMessage, logger } from "./utils/logs.ts";
 import { getTaskName } from './utils/cli.ts';
+import { readLines } from "https://deno.land/std@0.184.0/io/mod.ts";
+import { writeAll } from "https://deno.land/std@0.184.0/streams/write_all.ts";
+
+async function pipeThrough(
+  reader: Deno.Reader | null,
+  writer: Deno.Writer | null
+) {
+  const encoder = new TextEncoder();
+  if (writer && reader) {
+    for await (const line of readLines(reader)) {
+      await writeAll(writer, encoder.encode(`${line}\n`));
+    }
+  }
+}
 
 // run rask func
 export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
@@ -14,34 +28,35 @@ export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
       }
     }
 
-    const runCmd = Deno.run({
+    const runCmd: Deno.Process = Deno.run({
       cmd,
       cwd,
-      stdout: "inherit",
-      stderr: "inherit",
-      stdin: "inherit",
+      stdout: "piped",
+      stderr: "piped"
     });
 
     const realCommand = isWindows
       ? cmd.splice(2, cmd.length - 2).join(" ")
       : cmd.join(" ");
-    const startLog = logger(realCommand, taskName) + "\n";
-    const startLogUnit8 = new TextEncoder().encode(startLog);
-    await Deno.stdout.write(startLogUnit8);
 
-    const { code } = await runCmd.status();
+    console.log(logger(realCommand, taskName));
 
-    if (code !== 0) {
-      const errorLogUnit8 = new TextEncoder().encode(
-        errorMessage(realCommand, taskName),
-      );
-      await Deno.stdout.write(errorLogUnit8);
+    pipeThrough(runCmd.stdout, Deno.stdout);
+    pipeThrough(runCmd.stderr, Deno.stderr);
+
+    const { code, success } = await runCmd.status();
+
+    if (!success) {
+      runCmd.close();
+      Deno.close(runCmd.rid);
+      Deno.exit(code)
     }
-    
-    runCmd.close();
 
-    Deno.exit(code);
+    runCmd.close();
+    Deno.close(runCmd.rid);
   } catch (error) {
-    console.error(errorMessage(error.toString()));
+    if(error instanceof Deno.errors.BrokenPipe){
+      console.log(errorMessage("DRux Error!"));
+    }
   }
 };
