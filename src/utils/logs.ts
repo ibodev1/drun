@@ -17,8 +17,8 @@ export const logger = (message: string, taskName?: string | null) => {
 };
 
 export const availableTasks = (tasks: { [key: string]: string } | null, fileName: string | null) => {
+  console.info(color.green("DRux Available tasks: ") + color.italic(color.gray(fileName ?? "")));
   if (tasks && Array.isArray(Object.entries(tasks))) {
-    console.info(color.green("DRux Available tasks: ") + color.italic(color.gray(fileName ?? "")));
     const entries = Object.entries(tasks) ?? [];
     for (let i = 0; i < entries.length; i++) {
       const key = entries[i][0];
@@ -26,5 +26,7 @@ export const availableTasks = (tasks: { [key: string]: string } | null, fileName
       console.info("- " + color.cyan(key.toString()));
       console.log("   " + task?.toString());
     }
+  } else {
+    console.error(color.red("   No tasks found in configuration file"))
   }
 }

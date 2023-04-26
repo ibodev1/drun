@@ -40,11 +40,7 @@ const getTasks = async (configFile: string | null): Promise<ReturnValue> => {
         fileName = configFileName;
         tasks = fileContent?.tasks ?? fileContent?.scripts ?? null;
       } else {
-        console.error(
-          errorMessage(
-            `deno.json does not exist in root directory.`,
-          ),
-        );
+        console.error(errorMessage(`deno.json does not exist in root directory.`));
       }
     }
     return { tasks, fileName };
