@@ -1,4 +1,4 @@
-import * as color from "https://deno.land/std@0.184.0/fmt/colors.ts";
+import * as color from "std/fmt/colors.ts";
 export const errorMessage = (message: string, taskName?: string | null): string => {
   if (taskName) {
     return color.red("DRux error:") + " " + color.yellow(taskName) +

@@ -3,5 +3,6 @@
   "tasks": {
     "test": "deno test --allow-read --allow-run",
     "start": "echo Hello World!"
-  }
+  },
+  "importMap": "import_map.json"
 }

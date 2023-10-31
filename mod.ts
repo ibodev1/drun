@@ -14,8 +14,8 @@ export async function drux(
     const { tasks, fileName } = await getTasks(configFile);
     if (!!taskName && !!tasks) {
       const task = tasks[taskName];
-      if (task && task.trim() !== "") {
-        await runCmd(task.split(" "), Deno.cwd());
+      if (task && typeof task == "string" && task.trim() !== "") {
+        await runCmd(task.split(" "));
       } else {
         availableTasks(tasks, fileName);
       }

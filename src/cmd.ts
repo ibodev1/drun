@@ -1,62 +1,79 @@
-import os from "https://deno.land/x/dos@v0.11.0/mod.ts";
+import os from "dos";
 import { errorMessage, logger } from "./utils/logs.ts";
-import { getTaskName } from './utils/cli.ts';
-import { readLines } from "https://deno.land/std@0.184.0/io/mod.ts";
-import { writeAll } from "https://deno.land/std@0.184.0/streams/write_all.ts";
+import { getTaskName } from "./utils/cli.ts";
+import { mergeReadableStreams } from "std/streams/merge_readable_streams.ts";
 
-async function pipeThrough(
-  reader: Deno.Reader | null,
-  writer: Deno.Writer | null
-) {
-  const encoder = new TextEncoder();
-  if (writer && reader) {
-    for await (const line of readLines(reader)) {
-      await writeAll(writer, encoder.encode(`${line}\n`));
-    }
-  }
-}
+const streamPipeThrough = (stream: ReadableStream<Uint8Array>) => {
+  return stream
+    .pipeThrough(new TextDecoderStream())
+    .pipeThrough(
+      new TransformStream({
+        transform(chunk, controller) {
+          controller.enqueue(chunk);
+        },
+      }),
+    )
+    .pipeThrough(new TextEncoderStream());
+};
+
+const pipeThrough = (process: Deno.ChildProcess) => {
+  return mergeReadableStreams(
+    streamPipeThrough(process.stdout),
+    streamPipeThrough(process.stderr),
+  ).pipeTo(Deno.stdout.writable);
+};
 
 // run rask func
-export const runCmd = async (cmd: string[], cwd: string): Promise<void> => {
+export const runCmd = async (cmd: string[]): Promise<void> => {
   try {
-    const taskName = getTaskName();
-    const isWindows = os.platform() === "windows";
-    if (isWindows) {
-      const windowsProps = ["/c", "cmd"];
-      for (let i = 0; i < 2; i++) {
-        cmd.unshift(windowsProps[i]);
+    if (Array.isArray(cmd) && cmd.length > 0) {
+      const taskName = getTaskName();
+      const isWindows = os.platform() == "windows";
+      const abortController = new AbortController();
+
+      // Add 'cmd /c' for windows
+      if (isWindows) {
+        const windowsProps = ["/c", "cmd"];
+        for (let i = 0; i < 2; i++) {
+          cmd.unshift(windowsProps[i]);
+        }
       }
+
+      const command = cmd[0];
+      const args = cmd.slice(1, cmd.length);
+
+      const runCmd: Deno.Command = new Deno.Command(command, {
+        args,
+        signal: abortController.signal,
+        cwd: Deno.cwd(),
+        stdout: "piped",
+        stderr: "piped",
+        windowsRawArguments: isWindows,
+      });
+
+      const realCommand = isWindows
+        ? cmd.splice(2, cmd.length - 2).join(" ")
+        : cmd.join(" ");
+
+      console.log(logger(realCommand, taskName));
+
+      const process = runCmd.spawn();
+
+      await pipeThrough(process);
+
+      const { success, code } = await process.status;
+
+      if (!success) {
+        abortController.abort();
+        console.error(
+          errorMessage(realCommand, taskName),
+        );
+        Deno.exit(code);
+      }
+    } else {
+      console.error(errorMessage("Command empty!"));
     }
-
-    const runCmd: Deno.Process = Deno.run({
-      cmd,
-      cwd,
-      stdout: "piped",
-      stderr: "piped"
-    });
-
-    const realCommand = isWindows
-      ? cmd.splice(2, cmd.length - 2).join(" ")
-      : cmd.join(" ");
-
-    console.log(logger(realCommand, taskName));
-
-    pipeThrough(runCmd.stdout, Deno.stdout);
-    pipeThrough(runCmd.stderr, Deno.stderr);
-
-    const { code, success } = await runCmd.status();
-
-    if (!success) {
-      runCmd.close();
-      Deno.close(runCmd.rid);
-      Deno.exit(code)
-    }
-
-    runCmd.close();
-    Deno.close(runCmd.rid);
   } catch (error) {
-    if(error instanceof Deno.errors.BrokenPipe){
-      console.log(errorMessage("DRux Error!"));
-    }
+    console.error(errorMessage(new Error(error).message));
   }
 };

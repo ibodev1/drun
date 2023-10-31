@@ -1,4 +1,4 @@
-import { assert } from "https://deno.land/std@0.184.0/testing/asserts.ts";
+import { assert } from "std/assert/mod.ts";
 
 Deno.test("drux is file", async (): Promise<void> => {
   const denoFilePath = await Deno.realPath("deno.json");
